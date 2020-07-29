@@ -1,5 +1,6 @@
 # letitgo
 
+[![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu)
 [![Build Status](https://www.travis-ci.org/evercyan/letitgo.svg?branch=master)](https://www.travis-ci.org/evercyan/letitgo)
 [![codecov](https://codecov.io/gh/evercyan/leetcli/branch/master/graph/badge.svg?token=RbJTUtAlvl)](https://codecov.io/gh/evercyan/letitgo)
 
