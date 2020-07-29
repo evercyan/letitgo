@@ -1,0 +1,15 @@
+language: go
+
+go:
+- 1.14
+
+branches:
+  only:
+  - master
+
+script:
+- go get -t -v ./...
+- bash ./test.sh
+
+after_success:
+- bash <(curl -s https://codecov.io/bash)
