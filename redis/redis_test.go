@@ -17,6 +17,9 @@ func getRedis() (*Redis, error) {
 
 func TestCommon(t *testing.T) {
 	r, err := getRedis()
+	if err != nil {
+		t.Skip()
+	}
 	assert.Nil(t, err)
 	if err != nil {
 		t.FailNow()
@@ -59,6 +62,9 @@ func TestCommon(t *testing.T) {
 
 func TestString(t *testing.T) {
 	r, err := getRedis()
+	if err != nil {
+		t.Skip()
+	}
 	assert.Nil(t, err)
 	if err != nil {
 		t.FailNow()
@@ -93,6 +99,9 @@ func TestString(t *testing.T) {
 
 func TestList(t *testing.T) {
 	r, err := getRedis()
+	if err != nil {
+		t.Skip()
+	}
 	assert.Nil(t, err)
 	if err != nil {
 		t.FailNow()
@@ -143,6 +152,11 @@ func TestCoverage(t *testing.T) {
 		Password: "123456",
 		Prefix:   "higo_",
 	})
+
+	if err != nil {
+		t.Skip()
+	}
+
 	assert.Nil(t, err)
 	if err != nil {
 		t.FailNow()
@@ -150,5 +164,5 @@ func TestCoverage(t *testing.T) {
 	assert.Nil(t, r.SELECT(9))
 	assert.Nil(t, r.SET("encode", []int{1, 2, 3, 4}, 0))
 	assert.Empty(t, r.LLEN("queue"))
-	// assert.Nil(t, r.FLUSHDB())
+	assert.Nil(t, r.FLUSHDB())
 }
