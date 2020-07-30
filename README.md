@@ -1,7 +1,7 @@
 # letitgo
 
 [![Build Status](https://www.travis-ci.org/evercyan/letitgo.svg?branch=master)](https://www.travis-ci.org/evercyan/letitgo)
-[![codecov](https://codecov.io/gh/evercyan/leetcli/branch/master/graph/badge.svg?token=RbJTUtAlvl)](https://codecov.io/gh/evercyan/letitgo)
+[![codecov](https://codecov.io/gh/evercyan/letitgo/branch/master/graph/badge.svg)](https://codecov.io/gh/evercyan/letitgo)
 
 > some utils that use frequently
 
