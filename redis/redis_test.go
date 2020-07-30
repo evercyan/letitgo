@@ -15,11 +15,17 @@ func getRedis() (*Redis, error) {
 	return r, err
 }
 
-func TestCommon(t *testing.T) {
-	r, err := getRedis()
+func skip(t *testing.T, err error) {
 	if err != nil {
 		t.Skip()
 	}
+}
+
+func TestCommon(t *testing.T) {
+	r, err := getRedis()
+
+	skip(t, err)
+
 	assert.Nil(t, err)
 	if err != nil {
 		t.FailNow()
@@ -62,9 +68,9 @@ func TestCommon(t *testing.T) {
 
 func TestString(t *testing.T) {
 	r, err := getRedis()
-	if err != nil {
-		t.Skip()
-	}
+
+	skip(t, err)
+
 	assert.Nil(t, err)
 	if err != nil {
 		t.FailNow()
@@ -99,9 +105,9 @@ func TestString(t *testing.T) {
 
 func TestList(t *testing.T) {
 	r, err := getRedis()
-	if err != nil {
-		t.Skip()
-	}
+
+	skip(t, err)
+
 	assert.Nil(t, err)
 	if err != nil {
 		t.FailNow()
@@ -153,9 +159,7 @@ func TestCoverage(t *testing.T) {
 		Prefix:   "higo_",
 	})
 
-	if err != nil {
-		t.Skip()
-	}
+	skip(t, err)
 
 	assert.Nil(t, err)
 	if err != nil {

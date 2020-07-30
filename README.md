@@ -1,22 +1,21 @@
 # letitgo
 
-[![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu)
 [![Build Status](https://www.travis-ci.org/evercyan/letitgo.svg?branch=master)](https://www.travis-ci.org/evercyan/letitgo)
 [![codecov](https://codecov.io/gh/evercyan/leetcli/branch/master/graph/badge.svg?token=RbJTUtAlvl)](https://codecov.io/gh/evercyan/letitgo)
 
 > some utils that use frequently
 
-more use info in *_test.go
+more info in *_test.go
 
 ```
 .
 |____crypto
-| |____encode.go        # 常用的一些 encode 操作, 如 Md5, Base64Encode, JsonEncode..
+| |____encode.go        # 常用的一些 encode 操作, 如 Base64Encode, JsonEncode..
 | |____aes.go           # AES 加解密
 | |____snowflake.go     # 雪花 id
 | |____jwt.go           # golang jwt(github.com/dgrijalva/jwt-go)
 |____util
-| |____util.go          # 工具集合, Guid, Rand...
+| |____util.go          # 工具集合, Md5, Guid, Rand...
 | |____is.go            # Is 集合, IsInt, IsEmail...
 | |____to.go            # To 集合, ToString, ToCamelCase...
 |____redis
