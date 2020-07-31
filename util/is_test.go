@@ -77,11 +77,6 @@ func TestIsMobile(t *testing.T) {
 	assert.False(t, IsMobile("134"))
 }
 
-func TestIsExist(t *testing.T) {
-	assert.True(t, IsExist("./is.go"))
-	assert.False(t, IsExist("./is_t.go"))
-}
-
 func TestInArray(t *testing.T) {
 	assert.True(t, InArray(1, []int{1, 2, 3}))
 	assert.False(t, InArray(4, []int{1, 2, 3}))

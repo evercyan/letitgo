@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"net"
 	"net/url"
-	"os"
 	"reflect"
 	"regexp"
 	"strings"
@@ -141,11 +140,6 @@ func InArray(elem interface{}, target interface{}) bool {
 func IsJson(str string) bool {
 	var js json.RawMessage
 	return json.Unmarshal([]byte(str), &js) == nil
-}
-
-func IsExist(str string) bool {
-	_, err := os.Stat(str)
-	return err == nil || os.IsExist(err)
 }
 
 func IsEmail(str string) bool {
