@@ -7,11 +7,11 @@ import (
 )
 
 func Base64Encode(text string) string {
-	return string(base64.URLEncoding.EncodeToString([]byte(text)))
+	return string(base64.StdEncoding.EncodeToString([]byte(text)))
 }
 
 func Base64Decode(text string) string {
-	resp, err := base64.URLEncoding.DecodeString(text)
+	resp, err := base64.StdEncoding.DecodeString(text)
 	if nil != err {
 		return ""
 	}
