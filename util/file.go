@@ -1,6 +1,7 @@
 package util
 
 import (
+	"fmt"
 	"io/ioutil"
 	"os"
 )
@@ -43,4 +44,17 @@ func ReadFile(path string) string {
 
 func WriteFile(path, str string) error {
 	return ioutil.WriteFile(path, []byte(str), 0755)
+}
+
+func GetSizeText(size int64) string {
+	if size < 1024 {
+		return ToString(size) + "B"
+	}
+	if size < 1024*1024 {
+		return fmt.Sprintf("%.2fKB", float64(size)/1024)
+	}
+	if size < 1024*1024*1024 {
+		return fmt.Sprintf("%.2fMB", float64(size)/(1024*1024))
+	}
+	return fmt.Sprintf("%.2fGB", float64(size)/(1024*1024*1024))
 }

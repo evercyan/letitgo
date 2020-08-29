@@ -11,7 +11,7 @@ func TestAes(t *testing.T) {
 	text := "123456"
 
 	encrypt, err := AesEncrypt(text, key)
-	assert.Equal(t, "sXxgEij7p-oTTqvOVoKbGQ==", encrypt)
+	assert.Equal(t, "sXxgEij7p+oTTqvOVoKbGQ==", encrypt)
 	assert.Nil(t, err)
 
 	decrypt, err := AesDecrypt(encrypt, key)

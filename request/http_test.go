@@ -33,12 +33,12 @@ func TestPost(t *testing.T) {
 	assert.JSONEq(t, `{"code":0,"method":"post"}`, resp)
 }
 
-func TestJsonPost(t *testing.T) {
+func TestRequest(t *testing.T) {
 	param := map[string]string{
 		"method": "jsonpost",
 	}
 	bytes, _ := json.Marshal(param)
-	resp, err := JsonPost("http://127.0.0.1/letitgo.php", string(bytes))
+	resp, err := Request("POST", "http://127.0.0.1/letitgo.php", string(bytes))
 
 	skip(t, err)
 

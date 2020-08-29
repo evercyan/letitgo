@@ -36,3 +36,12 @@ func TestWriteFile(t *testing.T) {
 	assert.Nil(t, WriteFile(file, content))
 	assert.Equal(t, content, ReadFile(file))
 }
+
+func TestGetSizeText(t *testing.T) {
+	assert.Equal(t, "0B", GetSizeText(0))
+	assert.Equal(t, "1023B", GetSizeText(1023))
+	assert.Equal(t, "1.00KB", GetSizeText(1024))
+	assert.Equal(t, "1.65KB", GetSizeText(1024+666))
+	assert.Equal(t, "1.65MB", GetSizeText((1024+666)*1024))
+	assert.Equal(t, "1.65GB", GetSizeText((1024+666)*1024*1024))
+}

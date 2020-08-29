@@ -28,9 +28,9 @@ func Post(url string, data string) (string, error) {
 	return string(b), err
 }
 
-func JsonPost(url string, data string) (string, error) {
+func Request(method string, url string, data string) (string, error) {
 	body := bytes.NewReader([]byte(data))
-	request, err := http.NewRequest("POST", url, body)
+	request, err := http.NewRequest(method, url, body)
 	if err != nil {
 		return "", err
 	}
