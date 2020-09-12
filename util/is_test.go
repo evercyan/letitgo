@@ -84,3 +84,9 @@ func TestInArray(t *testing.T) {
 	assert.True(t, InArray(1, map[int]int{1: 1, 2: 2}))
 	assert.False(t, InArray(3, map[int]int{1: 1, 2: 2}))
 }
+
+func TestIsChinese(t *testing.T) {
+	assert.True(t, IsChinese("你好"))
+	assert.False(t, IsChinese("134"))
+	assert.False(t, IsChinese("你好a"))
+}
