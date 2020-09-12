@@ -1,14 +1,14 @@
 language: go
 
-services:
-  - redis-server
-
 go:
 - 1.14
 
 branches:
   only:
   - master
+
+before_script:
+- sudo redis-server /etc/redis/redis.conf --port 6379 --requirepass '123456'
 
 script:
 - go get -t -v ./...

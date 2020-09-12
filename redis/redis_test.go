@@ -14,8 +14,8 @@ func skip(t *testing.T, err error) {
 
 func getRedis() (*Redis, error) {
 	r, err := New(Options{
-		Addr:     "localhost:6379",
-		Password: "",
+		Addr:     "127.0.0.1:6379",
+		Password: "123456",
 		Prefix:   "letitgo_",
 	})
 	return r, err
@@ -148,7 +148,7 @@ func TestCoverage(t *testing.T) {
 	assert.NotNil(t, err2)
 
 	_, err3 := New(Options{
-		Password: "",
+		Password: "123456",
 		Db:       20,
 	})
 	assert.NotNil(t, err3)
