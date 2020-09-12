@@ -5,29 +5,29 @@ import (
 	"reflect"
 )
 
-type CollectionMap struct {
-	CollectionBase
+type collectionMap struct {
+	collectionBase
 	value []map[string]interface{}
 }
 
-func (c CollectionMap) Value() interface{} {
+func (c collectionMap) Value() interface{} {
 	return c.value
 }
 
-func (c CollectionMap) Length() int {
+func (c collectionMap) Length() int {
 	return c.length
 }
 
-func (c CollectionMap) Json() string {
+func (c collectionMap) Json() string {
 	str, _ := json.Marshal(c.value)
 	return string(str)
 }
 
-func (c CollectionMap) DelKey(key int) Collection {
+func (c collectionMap) DelKey(key int) collection {
 	if key < 0 || key >= len(c.value) {
 		return c
 	}
-	list := []map[string]interface{}{}
+	var list []map[string]interface{}
 	if key == len(c.value)-1 {
 		list = c.value[:key]
 	} else {
@@ -36,7 +36,7 @@ func (c CollectionMap) DelKey(key int) Collection {
 	return Collect(list)
 }
 
-func (c CollectionMap) DelKeyValue(key string, value interface{}) Collection {
+func (c collectionMap) DelKeyValue(key string, value interface{}) collection {
 	for i := 0; i < len(c.value); i++ {
 		if c.value[i][key] == value {
 			return c.DelKey(i)
@@ -45,7 +45,7 @@ func (c CollectionMap) DelKeyValue(key string, value interface{}) Collection {
 	return c
 }
 
-func (c CollectionMap) Pluck(key string) Collection {
+func (c collectionMap) Pluck(key string) collection {
 	list := make([]interface{}, 0)
 	for i := 0; i < len(c.value); i++ {
 		list = append(list, c.value[i][key])
@@ -53,7 +53,7 @@ func (c CollectionMap) Pluck(key string) Collection {
 	return Collect(list)
 }
 
-func (c CollectionMap) Filter(callback FilterCallback) Collection {
+func (c collectionMap) Filter(callback filterCallback) collection {
 	list := []map[string]interface{}{}
 	for i := 0; i < len(c.value); i++ {
 		if callback(i, c.value[i]) {
@@ -63,7 +63,7 @@ func (c CollectionMap) Filter(callback FilterCallback) Collection {
 	return Collect(list)
 }
 
-func (c CollectionMap) GroupBy(key string) map[string]interface{} {
+func (c collectionMap) GroupBy(key string) map[string]interface{} {
 	m := map[string]interface{}{}
 	if c.length == 0 {
 		return m

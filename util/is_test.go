@@ -27,8 +27,8 @@ func TestType(t *testing.T) {
 	assert.True(t, IsMap(make(map[string]string)))
 	assert.True(t, IsChannel(make(chan string)))
 
-	assert.True(t, IsDate(time.Now()))
-	assert.False(t, IsDate("1"))
+	assert.True(t, IsTime(time.Now()))
+	assert.False(t, IsTime("1"))
 
 	elemStruct := struct {
 		Name string

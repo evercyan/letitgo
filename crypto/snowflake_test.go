@@ -16,6 +16,11 @@ func TestSnowFlake(t *testing.T) {
 func TestSnowFlakeCoverage(t *testing.T) {
 	_, err := NewSnowflake(1025)
 	assert.NotNil(t, err)
+
+	sf, _ := NewSnowflake(1)
+	for i := 0; i < 100; i++ {
+		go sf.Generate()
+	}
 }
 
 // BenchmarkSnowFlake-8   	10129148	       117 ns/op	      32 B/op	       1 allocs/op

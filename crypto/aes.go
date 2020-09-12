@@ -18,6 +18,7 @@ func pKCS7UnPadding(text []byte) []byte {
 	return text[:(length - unpadding)]
 }
 
+// AesEncrypt ...
 func AesEncrypt(text string, key string) (string, error) {
 	textByte, keyByte := []byte(text), []byte(key)
 	block, err := aes.NewCipher(keyByte)
@@ -32,6 +33,7 @@ func AesEncrypt(text string, key string) (string, error) {
 	return Base64Encode(string(encrypt)), nil
 }
 
+// AesDecrypt ...
 func AesDecrypt(text string, key string) (string, error) {
 	textByte, keyByte := []byte(Base64Decode(text)), []byte(key)
 	block, err := aes.NewCipher(keyByte)

@@ -7,6 +7,7 @@ import (
 	"strings"
 )
 
+// Get ...
 func Get(url string) (string, error) {
 	resp, err := http.Get(url)
 	if err != nil {
@@ -17,26 +18,27 @@ func Get(url string) (string, error) {
 	return string(b), err
 }
 
+// Post ...
 func Post(url string, data string) (string, error) {
 	u := ioutil.NopCloser(strings.NewReader(data))
-	r, err := http.Post(url, "application/x-www-form-urlencoded", u)
+	resp, err := http.Post(url, "application/x-www-form-urlencoded", u)
 	if err != nil {
 		return "", err
 	}
-	defer r.Body.Close()
-	b, err := ioutil.ReadAll(r.Body)
+	defer resp.Body.Close()
+	b, err := ioutil.ReadAll(resp.Body)
 	return string(b), err
 }
 
+// Request ...
 func Request(method string, url string, data string) (string, error) {
 	body := bytes.NewReader([]byte(data))
-	request, err := http.NewRequest(method, url, body)
+	req, err := http.NewRequest(method, url, body)
 	if err != nil {
 		return "", err
 	}
-	request.Header.Set("Content-Type", "application/json")
-	var resp *http.Response
-	resp, err = http.DefaultClient.Do(request)
+	req.Header.Set("Content-Type", "application/json")
+	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return "", err
 	}

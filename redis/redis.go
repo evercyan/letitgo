@@ -12,11 +12,13 @@ import (
 	"github.com/gomodule/redigo/redis"
 )
 
+// Redis ...
 type Redis struct {
 	*redis.Pool
 	options Options
 }
 
+// Options ...
 type Options struct {
 	Network     string                                 // 连接协议, 默认 tcp
 	Addr        string                                 // 连接地址, 默认 127.0.0.1:6379
@@ -30,6 +32,7 @@ type Options struct {
 	Unmarshal   func(data []byte, v interface{}) error // 反序列化函数, 默认 json.Unmarshal
 }
 
+// New ...
 func New(options Options) (*Redis, error) {
 	if options.Network == "" {
 		options.Network = "tcp"
@@ -63,11 +66,9 @@ func New(options Options) (*Redis, error) {
 				if err != nil {
 					return nil, err
 				}
-				if options.Password != "" {
-					if _, err := conn.Do("AUTH", options.Password); err != nil {
-						conn.Close()
-						return nil, err
-					}
+				if _, err := conn.Do("AUTH", options.Password); err != nil {
+					conn.Close()
+					return nil, err
 				}
 				if _, err := conn.Do("SELECT", options.Db); err != nil {
 					conn.Close()
@@ -110,122 +111,116 @@ func (r *Redis) prefix(key string) string {
 	return r.options.Prefix + key
 }
 
-func (r *Redis) encode(val interface{}) (interface{}, error) {
-	var result interface{}
+func (r *Redis) encode(val interface{}) interface{} {
 	switch v := val.(type) {
 	case string, int, uint, int8, int16, int32, int64, float32, float64, bool:
-		result = v
+		return v
 	default:
-		b, err := r.options.Marshal(v)
-		if err != nil {
-			return nil, err
-		}
-		result = string(b)
+		b, _ := r.options.Marshal(v)
+		return string(b)
 	}
-	return result, nil
 }
 
 func (r *Redis) decode(str interface{}, err error, val interface{}) error {
 	return r.options.Unmarshal([]byte(str.(string)), val)
 }
 
-/**
- * Common
- */
-
+// SELECT ...
 func (r *Redis) SELECT(db int) error {
 	_, err := r.do("SELECT", db)
 	return err
 }
 
+// FLUSHDB ...
 func (r *Redis) FLUSHDB() error {
 	_, err := r.do("FLUSHDB")
 	return err
 }
 
+// GET ...
 func (r *Redis) GET(key string) (string, error) {
 	return redis.String(r.do("GET", r.prefix(key)))
 }
 
+// SET ...
 func (r *Redis) SET(key string, val interface{}, expire int64) error {
-	value, err := r.encode(val)
-	if err != nil {
-		return err
-	}
+	value := r.encode(val)
 	if expire > 0 {
 		_, err := r.do("SETEX", r.prefix(key), expire, value)
 		return err
 	}
-	_, err = r.do("SET", r.prefix(key), value)
+	_, err := r.do("SET", r.prefix(key), value)
 	return err
 }
 
+// EXISTS ...
 func (r *Redis) EXISTS(key string) bool {
 	resp, err := redis.Bool(r.do("EXISTS", r.prefix(key)))
 	return err == nil && resp
 }
 
+// DEL ...
 func (r *Redis) DEL(key string) error {
 	_, err := r.do("DEL", r.prefix(key))
 	return err
 }
 
+// TTL ...
 func (r *Redis) TTL(key string) (ttl int64, err error) {
 	return redis.Int64(r.do("TTL", r.prefix(key)))
 }
 
+// EXPIRE ...
 func (r *Redis) EXPIRE(key string, expire int64) error {
 	_, err := r.do("EXPIRE", r.prefix(key), expire)
 	return err
 }
 
-/**
- * String
- */
-
+// INCR ...
 func (r *Redis) INCR(key string) (val int64, err error) {
 	return redis.Int64(r.do("INCR", r.prefix(key)))
 }
 
+// INCRBY ...
 func (r *Redis) INCRBY(key string, amount int64) (val int64, err error) {
 	return redis.Int64(r.do("INCRBY", r.prefix(key), amount))
 }
 
+// DECR ...
 func (r *Redis) DECR(key string) (val int64, err error) {
 	return redis.Int64(r.do("DECR", r.prefix(key)))
 }
 
+// DECRBY ...
 func (r *Redis) DECRBY(key string, amount int64) (val int64, err error) {
 	return redis.Int64(r.do("DECRBY", r.prefix(key), amount))
 }
 
-/**
- * List
- */
-
+// LPUSH ...
 func (r *Redis) LPUSH(key string, val string) error {
 	_, err := r.do("LPUSH", r.prefix(key), val)
 	return err
 }
 
+// RPUSH ...
 func (r *Redis) RPUSH(key string, val string) error {
 	_, err := r.do("RPUSH", r.prefix(key), val)
 	return err
 }
 
+// LPOP ...
 func (r *Redis) LPOP(key string) (string, error) {
 	return redis.String(r.do("LPOP", r.prefix(key)))
 }
 
+// RPOP ...
 func (r *Redis) RPOP(key string) (string, error) {
 	return redis.String(r.do("RPOP", r.prefix(key)))
 }
 
+// LLEN ...
 func (r *Redis) LLEN(key string) int64 {
-	resp, err := redis.Int64(r.do("LLEN", r.prefix(key)))
-	if err != nil {
-		return 0
-	}
+	resp, _ := redis.Int64(r.do("LLEN", r.prefix(key)))
 	return resp
 }
 

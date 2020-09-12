@@ -6,21 +6,25 @@ import (
 	"os"
 )
 
+// IsExist ...
 func IsExist(path string) bool {
 	_, err := os.Stat(path)
 	return err == nil || os.IsExist(err)
 }
 
+// IsFile ...
 func IsFile(path string) bool {
 	file, err := os.Stat(path)
 	return err == nil && !file.IsDir()
 }
 
+// IsDir ...
 func IsDir(path string) bool {
 	file, err := os.Stat(path)
 	return err == nil && file.IsDir()
 }
 
+// GetSize ...
 func GetSize(path string) int64 {
 	file, err := os.Stat(path)
 	if err != nil {
@@ -29,6 +33,7 @@ func GetSize(path string) int64 {
 	return file.Size()
 }
 
+// ReadFile ...
 func ReadFile(path string) string {
 	file, err := os.Open(path)
 	if err != nil {
@@ -42,10 +47,12 @@ func ReadFile(path string) string {
 	return string(resp)
 }
 
+// WriteFile ...
 func WriteFile(path, str string) error {
 	return ioutil.WriteFile(path, []byte(str), 0755)
 }
 
+// GetSizeText ...
 func GetSizeText(size int64) string {
 	if size < 1024 {
 		return ToString(size) + "B"

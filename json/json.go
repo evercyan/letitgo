@@ -10,6 +10,7 @@ type js struct {
 	value interface{}
 }
 
+// Json ...
 func Json(text string) *js {
 	j := new(js)
 	var v interface{}
@@ -72,10 +73,7 @@ func (j *js) ToJson() string {
 	if j.value == nil {
 		return ""
 	}
-	bytes, err := json.Marshal(j.value)
-	if err != nil {
-		return ""
-	}
+	bytes, _ := json.Marshal(j.value)
 	return string(bytes)
 }
 

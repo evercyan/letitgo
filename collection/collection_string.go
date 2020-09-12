@@ -4,25 +4,25 @@ import (
 	"encoding/json"
 )
 
-type CollectionString struct {
-	CollectionBase
+type collectionString struct {
+	collectionBase
 	value []string
 }
 
-func (c CollectionString) Value() interface{} {
+func (c collectionString) Value() interface{} {
 	return c.value
 }
 
-func (c CollectionString) Length() int {
+func (c collectionString) Length() int {
 	return c.length
 }
 
-func (c CollectionString) Json() string {
+func (c collectionString) Json() string {
 	str, _ := json.Marshal(c.value)
 	return string(str)
 }
 
-func (c CollectionString) Join(delimiter string) string {
+func (c collectionString) Join(delimiter string) string {
 	str := ""
 	for i := 0; i < len(c.value); i++ {
 		if i != len(c.value)-1 {
@@ -34,7 +34,7 @@ func (c CollectionString) Join(delimiter string) string {
 	return str
 }
 
-func (c CollectionString) Contains(value interface{}) bool {
+func (c collectionString) Contains(value interface{}) bool {
 	for i := 0; i < len(c.value); i++ {
 		if c.value[i] == value.(string) {
 			return true
@@ -43,7 +43,7 @@ func (c CollectionString) Contains(value interface{}) bool {
 	return false
 }
 
-func (c CollectionString) Unique() Collection {
+func (c collectionString) Unique() collection {
 	list := []string{}
 	m := map[string]bool{}
 	for i := 0; i < len(c.value); i++ {
@@ -55,7 +55,7 @@ func (c CollectionString) Unique() Collection {
 	return Collect(list)
 }
 
-func (c CollectionString) DelKey(key int) Collection {
+func (c collectionString) DelKey(key int) collection {
 	if key < 0 || key >= len(c.value) {
 		return c
 	}
@@ -68,7 +68,7 @@ func (c CollectionString) DelKey(key int) Collection {
 	return Collect(list)
 }
 
-func (c CollectionString) DelValue(value interface{}) Collection {
+func (c collectionString) DelValue(value interface{}) collection {
 	for i := 0; i < len(c.value); i++ {
 		if c.value[i] == value.(string) {
 			return c.DelKey(i)
@@ -77,7 +77,7 @@ func (c CollectionString) DelValue(value interface{}) Collection {
 	return c
 }
 
-func (c CollectionString) Filter(callback FilterCallback) Collection {
+func (c collectionString) Filter(callback filterCallback) collection {
 	list := []string{}
 	for i := 0; i < len(c.value); i++ {
 		if callback(i, c.value[i]) {

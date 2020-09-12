@@ -9,15 +9,16 @@ import (
 	"math"
 	"math/big"
 	"net"
-	"time"
 )
 
+// Md5 ...
 func Md5(str string) string {
 	h := md5.New()
 	h.Write([]byte(str))
 	return hex.EncodeToString(h.Sum(nil))
 }
 
+// GetClientIp ...
 func GetClientIp() string {
 	addrs, err := net.InterfaceAddrs()
 	if err != nil {
@@ -31,6 +32,7 @@ func GetClientIp() string {
 	return ""
 }
 
+// Guid ...
 func Guid() string {
 	b := make([]byte, 48)
 	if _, err := io.ReadFull(rand.Reader, b); err != nil {
@@ -39,10 +41,7 @@ func Guid() string {
 	return Md5(string(base64.URLEncoding.EncodeToString(b)))
 }
 
-func Timestamp() int64 {
-	return time.Now().Unix()
-}
-
+// Rand ...
 func Rand(min, max int64) int64 {
 	if min > max {
 		return 0

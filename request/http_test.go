@@ -45,3 +45,10 @@ func TestRequest(t *testing.T) {
 	assert.Nil(t, err)
 	assert.JSONEq(t, `{"code":0,"method":"jsonpost"}`, resp)
 }
+
+func TestRequestCoverage(t *testing.T) {
+	Get("get")
+
+	param := url.Values{"method": {"post"}}
+	Post("post", param.Encode())
+}

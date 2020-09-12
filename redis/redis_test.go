@@ -6,19 +6,19 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func getRedis() (*Redis, error) {
-	r, err := New(Options{
-		Addr:     "127.0.0.1:6379",
-		Password: "123456",
-		Prefix:   "higo_",
-	})
-	return r, err
-}
-
 func skip(t *testing.T, err error) {
 	if err != nil {
 		t.Skip()
 	}
+}
+
+func getRedis() (*Redis, error) {
+	r, err := New(Options{
+		Addr:     "127.0.0.1:6379",
+		Password: "",
+		Prefix:   "letitgo_",
+	})
+	return r, err
 }
 
 func TestCommon(t *testing.T) {
@@ -148,24 +148,20 @@ func TestCoverage(t *testing.T) {
 	assert.NotNil(t, err2)
 
 	_, err3 := New(Options{
-		Password: "123456",
-		Db:       16,
+		Password: "",
+		Db:       20,
 	})
 	assert.NotNil(t, err3)
 
-	r, err := New(Options{
-		Addr:     "127.0.0.1:6379",
-		Password: "123456",
-		Prefix:   "higo_",
-	})
-
+	r, err := getRedis()
 	skip(t, err)
 
 	assert.Nil(t, err)
 	if err != nil {
 		t.FailNow()
 	}
-	assert.Nil(t, r.SELECT(9))
+
+	assert.Nil(t, r.SELECT(1))
 	assert.Nil(t, r.SET("encode", []int{1, 2, 3, 4}, 0))
 	assert.Empty(t, r.LLEN("queue"))
 	assert.Nil(t, r.FLUSHDB())

@@ -1,62 +1,62 @@
 package collection
 
-type CollectionBase struct {
+type collectionBase struct {
 	value  interface{}
 	length int
 }
 
-func (c CollectionBase) Value() interface{} {
+func (c collectionBase) Value() interface{} {
 	return nil
 }
 
-func (c CollectionBase) Length() int {
+func (c collectionBase) Length() int {
 	return 0
 }
 
-func (c CollectionBase) Json() string {
+func (c collectionBase) Json() string {
 	return ""
 }
 
-func (c CollectionBase) Join(delimiter string) string {
+func (c collectionBase) Join(delimiter string) string {
 	return ""
 }
 
-func (c CollectionBase) Min() float64 {
+func (c collectionBase) Min() float64 {
 	return 0
 }
 
-func (c CollectionBase) Max() float64 {
+func (c collectionBase) Max() float64 {
 	return 0
 }
 
-func (c CollectionBase) Contains(value interface{}) bool {
+func (c collectionBase) Contains(value interface{}) bool {
 	return false
 }
 
-func (c CollectionBase) Unique() Collection {
+func (c collectionBase) Unique() collection {
 	return nil
 }
 
-func (c CollectionBase) DelKey(key int) Collection {
+func (c collectionBase) DelKey(key int) collection {
 	return nil
 }
 
-func (c CollectionBase) DelValue(value interface{}) Collection {
+func (c collectionBase) DelValue(value interface{}) collection {
 	return nil
 }
 
-func (c CollectionBase) Pluck(key string) Collection {
+func (c collectionBase) Pluck(key string) collection {
 	return nil
 }
 
-func (c CollectionBase) DelKeyValue(key string, value interface{}) Collection {
+func (c collectionBase) DelKeyValue(key string, value interface{}) collection {
 	return nil
 }
 
-func (c CollectionBase) Filter(callback FilterCallback) Collection {
+func (c collectionBase) Filter(callback filterCallback) collection {
 	return nil
 }
 
-func (c CollectionBase) GroupBy(key string) map[string]interface{} {
+func (c collectionBase) GroupBy(key string) map[string]interface{} {
 	return map[string]interface{}{}
 }

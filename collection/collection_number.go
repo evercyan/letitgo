@@ -4,25 +4,25 @@ import (
 	"encoding/json"
 )
 
-type CollectionNumber struct {
-	CollectionBase
+type collectionNumber struct {
+	collectionBase
 	value []float64
 }
 
-func (c CollectionNumber) Value() interface{} {
+func (c collectionNumber) Value() interface{} {
 	return c.value
 }
 
-func (c CollectionNumber) Length() int {
+func (c collectionNumber) Length() int {
 	return c.length
 }
 
-func (c CollectionNumber) Json() string {
+func (c collectionNumber) Json() string {
 	str, _ := json.Marshal(c.value)
 	return string(str)
 }
 
-func (c CollectionNumber) Min() float64 {
+func (c collectionNumber) Min() float64 {
 	min := c.value[0]
 	for i := 1; i < len(c.value); i++ {
 		if c.value[i] < min {
@@ -32,7 +32,7 @@ func (c CollectionNumber) Min() float64 {
 	return min
 }
 
-func (c CollectionNumber) Max() float64 {
+func (c collectionNumber) Max() float64 {
 	max := c.value[0]
 	for i := 1; i < len(c.value); i++ {
 		if c.value[i] > max {
@@ -42,7 +42,7 @@ func (c CollectionNumber) Max() float64 {
 	return max
 }
 
-func (c CollectionNumber) Contains(value interface{}) bool {
+func (c collectionNumber) Contains(value interface{}) bool {
 	for i := 0; i < len(c.value); i++ {
 		if c.value[i] == value.(float64) {
 			return true
@@ -51,7 +51,7 @@ func (c CollectionNumber) Contains(value interface{}) bool {
 	return false
 }
 
-func (c CollectionNumber) Unique() Collection {
+func (c collectionNumber) Unique() collection {
 	list := []float64{}
 	m := map[float64]bool{}
 	for i := 0; i < len(c.value); i++ {
@@ -63,11 +63,11 @@ func (c CollectionNumber) Unique() Collection {
 	return Collect(list)
 }
 
-func (c CollectionNumber) DelKey(key int) Collection {
+func (c collectionNumber) DelKey(key int) collection {
 	if key < 0 || key >= len(c.value) {
 		return c
 	}
-	list := []float64{}
+	var list []float64
 	if key == len(c.value)-1 {
 		list = c.value[:key]
 	} else {
@@ -76,7 +76,7 @@ func (c CollectionNumber) DelKey(key int) Collection {
 	return Collect(list)
 }
 
-func (c CollectionNumber) DelValue(value interface{}) Collection {
+func (c collectionNumber) DelValue(value interface{}) collection {
 	for i := 0; i < len(c.value); i++ {
 		if c.value[i] == value.(float64) {
 			return c.DelKey(i)
@@ -85,7 +85,7 @@ func (c CollectionNumber) DelValue(value interface{}) Collection {
 	return c
 }
 
-func (c CollectionNumber) Filter(callback FilterCallback) Collection {
+func (c collectionNumber) Filter(callback filterCallback) collection {
 	list := []float64{}
 	for i := 0; i < len(c.value); i++ {
 		if callback(i, c.value[i]) {

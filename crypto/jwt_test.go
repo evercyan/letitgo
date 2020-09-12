@@ -41,3 +41,12 @@ func TestJWTCoverage(t *testing.T) {
 	assert.NotNil(t, err)
 	assert.Nil(t, resp)
 }
+
+func TestJWTErr(t *testing.T) {
+	key := "sdflIerl34i^flkj"
+	jwt := NewJWT(key, 100)
+
+	resp, err := jwt.ParseToken("1")
+	assert.NotNil(t, err)
+	assert.Nil(t, resp)
+}

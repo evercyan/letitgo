@@ -1,8 +1,8 @@
 /**
  * 基于对 https://github.com/chenhg5/collection 的学习和自己使用的简化
  *
- * 定义 Collection 接口, []string, []number, []map 均实现该接口
- * 公共 func, 继承自 CollectionBase
+ * 定义 collection 接口, []string, []number, []map 均实现该接口
+ * 公共 func, 继承自 collectionBase
  *
  * number 类型统一存储为 float64
  *
@@ -11,7 +11,7 @@
 
 package collection
 
-type Collection interface {
+type collection interface {
 	Value() interface{}
 	Length() int
 	Json() string
@@ -22,28 +22,29 @@ type Collection interface {
 	Max() float64
 
 	Contains(interface{}) bool
-	Unique() Collection
-	DelKey(int) Collection
-	DelValue(interface{}) Collection
+	Unique() collection
+	DelKey(int) collection
+	DelValue(interface{}) collection
 
-	Pluck(string) Collection
-	DelKeyValue(string, interface{}) Collection
+	Pluck(string) collection
+	DelKeyValue(string, interface{}) collection
 
-	Filter(FilterCallback) Collection
+	Filter(filterCallback) collection
 	GroupBy(string) map[string]interface{}
 }
 
-type FilterCallback func(key, value interface{}) bool
+type filterCallback func(key, value interface{}) bool
 
-func Collect(elem interface{}) Collection {
+// Collect ...
+func Collect(elem interface{}) collection {
 	switch elem.(type) {
 	case []string:
-		var c CollectionString
+		var c collectionString
 		c.value = elem.([]string)
 		c.length = len(elem.([]string))
 		return c
 	case []int:
-		var c CollectionNumber
+		var c collectionNumber
 		var value = make([]float64, len(elem.([]int)))
 		for k, v := range elem.([]int) {
 			value[k] = float64(v)
@@ -52,7 +53,7 @@ func Collect(elem interface{}) Collection {
 		c.length = len(value)
 		return c
 	case []int8:
-		var c CollectionNumber
+		var c collectionNumber
 		var value = make([]float64, len(elem.([]int8)))
 		for k, v := range elem.([]int8) {
 			value[k] = float64(v)
@@ -61,7 +62,7 @@ func Collect(elem interface{}) Collection {
 		c.length = len(value)
 		return c
 	case []int16:
-		var c CollectionNumber
+		var c collectionNumber
 		var value = make([]float64, len(elem.([]int16)))
 		for k, v := range elem.([]int16) {
 			value[k] = float64(v)
@@ -70,7 +71,7 @@ func Collect(elem interface{}) Collection {
 		c.length = len(value)
 		return c
 	case []int32:
-		var c CollectionNumber
+		var c collectionNumber
 		var value = make([]float64, len(elem.([]int32)))
 		for k, v := range elem.([]int32) {
 			value[k] = float64(v)
@@ -79,7 +80,7 @@ func Collect(elem interface{}) Collection {
 		c.length = len(value)
 		return c
 	case []int64:
-		var c CollectionNumber
+		var c collectionNumber
 		var value = make([]float64, len(elem.([]int64)))
 		for k, v := range elem.([]int64) {
 			value[k] = float64(v)
@@ -88,7 +89,7 @@ func Collect(elem interface{}) Collection {
 		c.length = len(value)
 		return c
 	case []uint:
-		var c CollectionNumber
+		var c collectionNumber
 		var value = make([]float64, len(elem.([]uint)))
 		for k, v := range elem.([]uint) {
 			value[k] = float64(v)
@@ -97,7 +98,7 @@ func Collect(elem interface{}) Collection {
 		c.length = len(value)
 		return c
 	case []uint8:
-		var c CollectionNumber
+		var c collectionNumber
 		var value = make([]float64, len(elem.([]uint8)))
 		for k, v := range elem.([]uint8) {
 			value[k] = float64(v)
@@ -106,7 +107,7 @@ func Collect(elem interface{}) Collection {
 		c.length = len(value)
 		return c
 	case []uint16:
-		var c CollectionNumber
+		var c collectionNumber
 		var value = make([]float64, len(elem.([]uint16)))
 		for k, v := range elem.([]uint16) {
 			value[k] = float64(v)
@@ -115,7 +116,7 @@ func Collect(elem interface{}) Collection {
 		c.length = len(value)
 		return c
 	case []uint32:
-		var c CollectionNumber
+		var c collectionNumber
 		var value = make([]float64, len(elem.([]uint32)))
 		for k, v := range elem.([]uint32) {
 			value[k] = float64(v)
@@ -124,7 +125,7 @@ func Collect(elem interface{}) Collection {
 		c.length = len(value)
 		return c
 	case []uint64:
-		var c CollectionNumber
+		var c collectionNumber
 		var value = make([]float64, len(elem.([]uint64)))
 		for k, v := range elem.([]uint64) {
 			value[k] = float64(v)
@@ -133,7 +134,7 @@ func Collect(elem interface{}) Collection {
 		c.length = len(value)
 		return c
 	case []float32:
-		var c CollectionNumber
+		var c collectionNumber
 		var value = make([]float64, len(elem.([]float32)))
 		for k, v := range elem.([]float32) {
 			value[k] = float64(v)
@@ -142,23 +143,23 @@ func Collect(elem interface{}) Collection {
 		c.length = len(value)
 		return c
 	case []float64:
-		var c CollectionNumber
+		var c collectionNumber
 		c.value = elem.([]float64)
 		c.length = len(elem.([]float64))
 		return c
 	case []map[string]interface{}:
-		var m CollectionMap
+		var m collectionMap
 		m.value = elem.([]map[string]interface{})
 		m.length = len(elem.([]map[string]interface{}))
 		return m
 	case []interface{}:
 		length := len(elem.([]interface{}))
 		if length == 0 {
-			return CollectionBase{}
+			return collectionBase{}
 		}
 		switch elem.([]interface{})[0].(type) {
 		case string:
-			var c CollectionString
+			var c collectionString
 			var value = make([]string, length)
 			for k, v := range elem.([]interface{}) {
 				value[k] = v.(string)
@@ -167,7 +168,7 @@ func Collect(elem interface{}) Collection {
 			c.length = length
 			return c
 		case int:
-			var c CollectionNumber
+			var c collectionNumber
 			var value = make([]float64, length)
 			for k, v := range elem.([]interface{}) {
 				value[k] = float64(v.(int))
@@ -176,7 +177,7 @@ func Collect(elem interface{}) Collection {
 			c.length = length
 			return c
 		case int8:
-			var c CollectionNumber
+			var c collectionNumber
 			var value = make([]float64, length)
 			for k, v := range elem.([]interface{}) {
 				value[k] = float64(v.(int8))
@@ -185,7 +186,7 @@ func Collect(elem interface{}) Collection {
 			c.length = length
 			return c
 		case int16:
-			var c CollectionNumber
+			var c collectionNumber
 			var value = make([]float64, length)
 			for k, v := range elem.([]interface{}) {
 				value[k] = float64(v.(int16))
@@ -194,7 +195,7 @@ func Collect(elem interface{}) Collection {
 			c.length = length
 			return c
 		case int32:
-			var c CollectionNumber
+			var c collectionNumber
 			var value = make([]float64, length)
 			for k, v := range elem.([]interface{}) {
 				value[k] = float64(v.(int32))
@@ -203,7 +204,7 @@ func Collect(elem interface{}) Collection {
 			c.length = length
 			return c
 		case int64:
-			var c CollectionNumber
+			var c collectionNumber
 			var value = make([]float64, length)
 			for k, v := range elem.([]interface{}) {
 				value[k] = float64(v.(int64))
@@ -212,7 +213,7 @@ func Collect(elem interface{}) Collection {
 			c.length = length
 			return c
 		case uint:
-			var c CollectionNumber
+			var c collectionNumber
 			var value = make([]float64, length)
 			for k, v := range elem.([]interface{}) {
 				value[k] = float64(v.(uint))
@@ -221,7 +222,7 @@ func Collect(elem interface{}) Collection {
 			c.length = length
 			return c
 		case uint8:
-			var c CollectionNumber
+			var c collectionNumber
 			var value = make([]float64, length)
 			for k, v := range elem.([]interface{}) {
 				value[k] = float64(v.(uint8))
@@ -230,7 +231,7 @@ func Collect(elem interface{}) Collection {
 			c.length = length
 			return c
 		case uint16:
-			var c CollectionNumber
+			var c collectionNumber
 			var value = make([]float64, length)
 			for k, v := range elem.([]interface{}) {
 				value[k] = float64(v.(uint16))
@@ -239,7 +240,7 @@ func Collect(elem interface{}) Collection {
 			c.length = length
 			return c
 		case uint32:
-			var c CollectionNumber
+			var c collectionNumber
 			var value = make([]float64, length)
 			for k, v := range elem.([]interface{}) {
 				value[k] = float64(v.(uint32))
@@ -248,7 +249,7 @@ func Collect(elem interface{}) Collection {
 			c.length = length
 			return c
 		case uint64:
-			var c CollectionNumber
+			var c collectionNumber
 			var value = make([]float64, length)
 			for k, v := range elem.([]interface{}) {
 				value[k] = float64(v.(uint64))
@@ -257,7 +258,7 @@ func Collect(elem interface{}) Collection {
 			c.length = length
 			return c
 		case float32:
-			var c CollectionNumber
+			var c collectionNumber
 			var value = make([]float64, length)
 			for k, v := range elem.([]interface{}) {
 				value[k] = float64(v.(float32))
@@ -266,7 +267,7 @@ func Collect(elem interface{}) Collection {
 			c.length = length
 			return c
 		case float64:
-			var c CollectionNumber
+			var c collectionNumber
 			var value = make([]float64, length)
 			for k, v := range elem.([]interface{}) {
 				value[k] = float64(v.(float64))
@@ -275,7 +276,7 @@ func Collect(elem interface{}) Collection {
 			c.length = length
 			return c
 		case map[string]interface{}:
-			var c CollectionMap
+			var c collectionMap
 			var value = make([]map[string]interface{}, length)
 			for k, v := range elem.([]interface{}) {
 				value[k] = v.(map[string]interface{})
@@ -284,9 +285,9 @@ func Collect(elem interface{}) Collection {
 			c.length = length
 			return c
 		default:
-			return CollectionBase{}
+			return collectionBase{}
 		}
 	default:
-		return CollectionBase{}
+		return collectionBase{}
 	}
 }

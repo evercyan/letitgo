@@ -4,20 +4,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/dgrijalva/jwt-go"
+	jwt "github.com/dgrijalva/jwt-go"
 )
-
-type JWT struct {
-	Key    string
-	Expire int
-}
-
-func NewJWT(key string, expire int) *JWT {
-	return &JWT{
-		Key:    key,
-		Expire: expire,
-	}
-}
 
 /**
  * payload: map[string]interface{}{
@@ -31,17 +19,30 @@ func NewJWT(key string, expire int) *JWT {
  * }
  *
  */
+
+// JWT ...
+type JWT struct {
+	Key    string
+	Expire int
+}
+
+// NewJWT ...
+func NewJWT(key string, expire int) *JWT {
+	return &JWT{
+		Key:    key,
+		Expire: expire,
+	}
+}
+
+// GetToken ...
 func (t *JWT) GetToken(payload map[string]interface{}) (string, error) {
 	payload["iat"] = time.Now().Unix()
 	payload["exp"] = time.Now().Add(time.Duration(t.Expire) * time.Second).Unix()
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims(payload))
-	tokenString, err := token.SignedString([]byte(t.Key))
-	if err != nil {
-		return "", err
-	}
-	return tokenString, nil
+	return token.SignedString([]byte(t.Key))
 }
 
+// ParseToken ...
 func (t *JWT) ParseToken(tokenString string) (map[string]interface{}, error) {
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
@@ -49,6 +50,9 @@ func (t *JWT) ParseToken(tokenString string) (map[string]interface{}, error) {
 		}
 		return []byte(t.Key), nil
 	})
+	if err != nil {
+		return nil, err
+	}
 	claims, ok := token.Claims.(jwt.MapClaims)
 	if ok && token.Valid {
 		return claims, nil

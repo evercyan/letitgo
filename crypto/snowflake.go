@@ -31,25 +31,26 @@ const (
 	timestampShift = sequenceBits + workeridBits      //时间戳左移位数
 )
 
-type Snowflake struct {
+type snowflake struct {
 	sync.Mutex
 	timestamp int64
 	workerid  int64
 	sequence  int64
 }
 
-func NewSnowflake(workerid int64) (*Snowflake, error) {
+// NewSnowflake ...
+func NewSnowflake(workerid int64) (*snowflake, error) {
 	if workerid < 0 || workerid > workeridMax {
 		return nil, errors.New("workerid must be between 0 and 1023")
 	}
-	return &Snowflake{
+	return &snowflake{
 		timestamp: 0,
 		workerid:  workerid,
 		sequence:  0,
 	}, nil
 }
 
-func (s *Snowflake) Generate() int64 {
+func (s *snowflake) Generate() int64 {
 	s.Lock()
 	now := time.Now().UnixNano() / 1000000
 	if s.timestamp == now {

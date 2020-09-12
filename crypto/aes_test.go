@@ -18,3 +18,13 @@ func TestAes(t *testing.T) {
 	assert.Equal(t, text, decrypt)
 	assert.Nil(t, err)
 }
+
+func TestAesCoverages(t *testing.T) {
+	encrypt, err := AesEncrypt("", "")
+	assert.Empty(t, "", encrypt)
+	assert.NotNil(t, err)
+
+	decrypt, err := AesDecrypt("", "")
+	assert.Empty(t, "", decrypt)
+	assert.NotNil(t, err)
+}
