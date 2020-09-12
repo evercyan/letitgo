@@ -14,7 +14,7 @@ func skip(t *testing.T, err error) {
 
 func getRedis() (*Redis, error) {
 	r, err := New(Options{
-		Addr:     "127.0.0.1:6379",
+		Addr:     "localhost:6379",
 		Password: "",
 		Prefix:   "letitgo_",
 	})
