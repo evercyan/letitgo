@@ -191,6 +191,7 @@ func IsMobile(str string) bool {
 	return regexp.MustCompile(regexMobile).MatchString(str)
 }
 
+// IsChinese ...
 func IsChinese(str string) bool {
 	return regexp.MustCompile(regexChinese).MatchString(str)
 }

@@ -1,8 +1,10 @@
-package cmdline
+package cli
 
 import (
 	"fmt"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestColor(t *testing.T) {
@@ -13,12 +15,12 @@ func TestColor(t *testing.T) {
 			// 字体颜色
 			for c := Black; c <= White; c++ {
 				text := a.String() + " " + b.String() + " " + c.String()
-				fmt.Println(Style(text).Attr(a).Color(c).BgColor(b).Text())
+				fmt.Printf(Style(text).Attr(a).Color(c).BgColor(b).Text() + " ")
+				assert.NotEmpty(t, Style(text).Attr(a).Color(c).BgColor(b).Text())
 			}
+			fmt.Println("")
 		}
+		fmt.Println("")
 	}
 	fmt.Println(Style("Coverage").Color(100).BgColor(100).Attr(100).Text())
-
-	// debug
-	// t.FailNow()
 }

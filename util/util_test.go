@@ -19,10 +19,15 @@ func TestGuid(t *testing.T) {
 }
 
 func TestRand(t *testing.T) {
-	assert.Equal(t, int64(0), Rand(2, 1))
-	assert.LessOrEqual(t, int64(1), Rand(1, 10))
-	assert.GreaterOrEqual(t, int64(10), Rand(1, 10))
+	assert.Equal(t, 0, Rand(2, 1))
+	assert.LessOrEqual(t, 1, Rand(1, 10))
+	assert.GreaterOrEqual(t, 10, Rand(1, 10))
 
-	assert.LessOrEqual(t, int64(-10), Rand(-10, 10))
-	assert.GreaterOrEqual(t, int64(10), Rand(-10, 10))
+	assert.LessOrEqual(t, -10, Rand(-10, 10))
+	assert.GreaterOrEqual(t, 10, Rand(-10, 10))
+}
+
+func TestRanger(t *testing.T) {
+	assert.Equal(t, []int{}, Range(2, 1))
+	assert.Equal(t, []int{1, 2}, Range(1, 2))
 }

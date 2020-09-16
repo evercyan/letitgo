@@ -6,9 +6,9 @@ import (
 	"encoding/base64"
 	"encoding/hex"
 	"io"
-	"math"
-	"math/big"
+	mrand "math/rand"
 	"net"
+	"time"
 )
 
 // Md5 ...
@@ -42,15 +42,22 @@ func Guid() string {
 }
 
 // Rand ...
-func Rand(min, max int64) int64 {
+func Rand(min, max int) int {
 	if min > max {
 		return 0
 	}
-	if min < 0 {
-		i64Min := int64(math.Abs(float64(min)))
-		result, _ := rand.Int(rand.Reader, big.NewInt(max+1+i64Min))
-		return result.Int64() - i64Min
+	mrand.Seed(time.Now().UnixNano())
+	return min + mrand.Intn(max+1-min)
+}
+
+// Range ...
+func Range(min, max int) []int {
+	list := []int{}
+	if min > max {
+		return list
 	}
-	result, _ := rand.Int(rand.Reader, big.NewInt(max-min+1))
-	return min + result.Int64()
+	for i := min; i <= max; i++ {
+		list = append(list, i)
+	}
+	return list
 }
