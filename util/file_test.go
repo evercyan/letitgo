@@ -45,3 +45,12 @@ func TestGetSizeText(t *testing.T) {
 	assert.Equal(t, "1.65MB", GetSizeText((1024+666)*1024))
 	assert.Equal(t, "1.65GB", GetSizeText((1024+666)*1024*1024))
 }
+
+func TestFileLine(t *testing.T) {
+	assert.Equal(t, 21, GetLineCount("../LICENSE"))
+	assert.Equal(t, map[int]string{
+		1: "MIT License",
+		2: "",
+		3: "Copyright (c) 2020 严宇川",
+	}, GetLineContent("../LICENSE", 1, 2, 3))
+}
