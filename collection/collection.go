@@ -1,6 +1,4 @@
 /**
- * 基于对 https://github.com/chenhg5/collection 的学习和自己使用的简化
- *
  * 定义 collection 接口, []string, []number, []map 均实现该接口
  * 公共 func, 继承自 collectionBase
  *
