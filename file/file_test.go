@@ -12,12 +12,13 @@ func TestSize(t *testing.T) {
 }
 
 func TestSizeText(t *testing.T) {
-	assert.Equal(t, "0B", SizeText(0))
-	assert.Equal(t, "1023B", SizeText(1023))
+	assert.Equal(t, "0.00B", SizeText(0))
+	assert.Equal(t, "1023.00B", SizeText(1023))
 	assert.Equal(t, "1.00KB", SizeText(1024))
 	assert.Equal(t, "1.65KB", SizeText(1024+666))
 	assert.Equal(t, "1.65MB", SizeText((1024+666)*1024))
 	assert.Equal(t, "1.65GB", SizeText((1024+666)*1024*1024))
+	assert.Equal(t, "1.00TB", SizeText(1*1024*1024*1024*1024))
 }
 
 func TestRead(t *testing.T) {

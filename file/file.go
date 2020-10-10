@@ -23,15 +23,17 @@ func Size(filePath string) int64 {
 
 // SizeText ...
 func SizeText(size int64) string {
-	if size < 1024 {
-		return fmt.Sprintf("%dB", size)
-	} else if size < 1024*1024 {
-		return fmt.Sprintf("%.2fKB", float64(size)/1024)
-	} else if size < 1024*1024*1024 {
-		return fmt.Sprintf("%.2fMB", float64(size)/(1024*1024))
-	} else {
-		return fmt.Sprintf("%.2fGB", float64(size)/(1024*1024*1024))
+	s := float64(size)
+	units := []string{"B", "KB", "MB", "GB", "TB"}
+	index := 0
+	for s >= 1024 {
+		s /= 1024
+		index++
+		if index == len(units)-1 {
+			break
+		}
 	}
+	return fmt.Sprintf("%.2f%s", s, units[index])
 }
 
 // Read ...
