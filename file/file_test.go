@@ -6,51 +6,45 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestIsExist(t *testing.T) {
-	assert.True(t, IsExist("./file.go"))
-	assert.False(t, IsExist("./file_t.go"))
+func TestSize(t *testing.T) {
+	assert.Equal(t, int64(0), Size("./file_t.go"))
+	assert.LessOrEqual(t, int64(0), Size("./file.go"))
 }
 
-func TestIsFile(t *testing.T) {
-	assert.True(t, IsFile("./file.go"))
-	assert.False(t, IsFile("./file_t.go"))
+func TestSizeText(t *testing.T) {
+	assert.Equal(t, "0B", SizeText(0))
+	assert.Equal(t, "1023B", SizeText(1023))
+	assert.Equal(t, "1.00KB", SizeText(1024))
+	assert.Equal(t, "1.65KB", SizeText(1024+666))
+	assert.Equal(t, "1.65MB", SizeText((1024+666)*1024))
+	assert.Equal(t, "1.65GB", SizeText((1024+666)*1024*1024))
 }
 
-func TestIsDir(t *testing.T) {
-	assert.True(t, IsDir("../util"))
-	assert.False(t, IsDir("./file.go"))
+func TestRead(t *testing.T) {
+	assert.NotEmpty(t, Read("./file.go"))
+	assert.Empty(t, Read("./file_t.go"))
 }
 
-func TestGetSize(t *testing.T) {
-	assert.Equal(t, int64(0), GetSize("./file_t.go"))
-	assert.LessOrEqual(t, int64(0), GetSize("./file.go"))
-}
-
-func TestReadFile(t *testing.T) {
-	assert.NotEmpty(t, ReadFile("./file.go"))
-}
-
-func TestWriteFile(t *testing.T) {
+func TestWrite(t *testing.T) {
 	file := "/tmp/letitgo.tmp"
 	content := "letitgo"
-	assert.Nil(t, WriteFile(file, content))
-	assert.Equal(t, content, ReadFile(file))
+	assert.Nil(t, Write(file, content))
+	assert.Equal(t, content, Read(file))
 }
 
-func TestGetSizeText(t *testing.T) {
-	assert.Equal(t, "0B", GetSizeText(0))
-	assert.Equal(t, "1023B", GetSizeText(1023))
-	assert.Equal(t, "1.00KB", GetSizeText(1024))
-	assert.Equal(t, "1.65KB", GetSizeText(1024+666))
-	assert.Equal(t, "1.65MB", GetSizeText((1024+666)*1024))
-	assert.Equal(t, "1.65GB", GetSizeText((1024+666)*1024*1024))
+func TestExt(t *testing.T) {
+	assert.Equal(t, ".go", Ext("./file.go"))
+	assert.Empty(t, Ext("./file_t"))
 }
 
-func TestFileLine(t *testing.T) {
-	assert.Equal(t, 21, GetLineCount("../LICENSE"))
+func TestLine(t *testing.T) {
+	assert.Equal(t, 0, LineCount("../LICENSES"))
+	assert.Equal(t, map[int]string{}, LineContent("../LICENSES"))
+
+	assert.Equal(t, 21, LineCount("../LICENSE"))
 	assert.Equal(t, map[int]string{
 		1: "MIT License",
 		2: "",
 		3: "Copyright (c) 2020 严宇川",
-	}, GetLineContent("../LICENSE", 1, 2, 3))
+	}, LineContent("../LICENSE", 1, 2, 3))
 }

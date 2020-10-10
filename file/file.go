@@ -6,58 +6,23 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"path"
+	"strings"
 
 	"github.com/evercyan/letitgo/util"
 )
 
-// IsExist ...
-func IsExist(path string) bool {
-	_, err := os.Stat(path)
-	return err == nil || os.IsExist(err)
-}
-
-// IsFile ...
-func IsFile(path string) bool {
-	file, err := os.Stat(path)
-	return err == nil && !file.IsDir()
-}
-
-// IsDir ...
-func IsDir(path string) bool {
-	file, err := os.Stat(path)
-	return err == nil && file.IsDir()
-}
-
-// GetSize ...
-func GetSize(path string) int64 {
-	file, err := os.Stat(path)
+// Size ...
+func Size(filePath string) int64 {
+	file, err := os.Stat(filePath)
 	if err != nil {
 		return 0
 	}
 	return file.Size()
 }
 
-// ReadFile ...
-func ReadFile(path string) string {
-	file, err := os.Open(path)
-	if err != nil {
-		return ""
-	}
-	defer file.Close()
-	resp, err := ioutil.ReadAll(file)
-	if err != nil {
-		return ""
-	}
-	return string(resp)
-}
-
-// WriteFile ...
-func WriteFile(path, str string) error {
-	return ioutil.WriteFile(path, []byte(str), 0755)
-}
-
-// GetSizeText ...
-func GetSizeText(size int64) string {
+// SizeText ...
+func SizeText(size int64) string {
 	if size < 1024 {
 		return fmt.Sprintf("%dB", size)
 	} else if size < 1024*1024 {
@@ -69,10 +34,34 @@ func GetSizeText(size int64) string {
 	}
 }
 
-// GetLineCount ...
-func GetLineCount(path string) int {
+// Read ...
+func Read(filePath string) string {
+	file, err := os.Open(filePath)
+	if err != nil {
+		return ""
+	}
+	defer file.Close()
+	resp, err := ioutil.ReadAll(file)
+	if err != nil {
+		return ""
+	}
+	return string(resp)
+}
+
+// Write ...
+func Write(filePath, str string) error {
+	return ioutil.WriteFile(filePath, []byte(str), 0755)
+}
+
+// Ext ...
+func Ext(file string) string {
+	return strings.ToLower(path.Ext(file))
+}
+
+// LineCount ...
+func LineCount(filePath string) int {
 	count := 0
-	file, err := os.Open(path)
+	file, err := os.Open(filePath)
 	if err != nil {
 		return count
 	}
@@ -91,10 +80,10 @@ func GetLineCount(path string) int {
 	}
 }
 
-// GetLineContent ...
-func GetLineContent(path string, numbers ...int) map[int]string {
+// LineContent ...
+func LineContent(filePath string, numbers ...int) map[int]string {
 	result := map[int]string{}
-	file, err := os.Open(path)
+	file, err := os.Open(filePath)
 	if err != nil {
 		return result
 	}
