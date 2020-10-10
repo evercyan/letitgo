@@ -1,4 +1,4 @@
-package util
+package file
 
 import (
 	"bufio"
@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+
+	"github.com/evercyan/letitgo/util"
 )
 
 // IsExist ...
@@ -57,15 +59,14 @@ func WriteFile(path, str string) error {
 // GetSizeText ...
 func GetSizeText(size int64) string {
 	if size < 1024 {
-		return ToString(size) + "B"
-	}
-	if size < 1024*1024 {
+		return fmt.Sprintf("%dB", size)
+	} else if size < 1024*1024 {
 		return fmt.Sprintf("%.2fKB", float64(size)/1024)
-	}
-	if size < 1024*1024*1024 {
+	} else if size < 1024*1024*1024 {
 		return fmt.Sprintf("%.2fMB", float64(size)/(1024*1024))
+	} else {
+		return fmt.Sprintf("%.2fGB", float64(size)/(1024*1024*1024))
 	}
-	return fmt.Sprintf("%.2fGB", float64(size)/(1024*1024*1024))
 }
 
 // GetLineCount ...
@@ -104,7 +105,7 @@ func GetLineContent(path string, numbers ...int) map[int]string {
 	for fileScanner.Scan() {
 		number++
 		// 如果 numbers 为空, 则取所有行
-		if len(numbers) == 0 || InArray(number, numbers) {
+		if len(numbers) == 0 || util.InArray(number, numbers) {
 			result[number] = fileScanner.Text()
 		}
 	}

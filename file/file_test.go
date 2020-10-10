@@ -1,4 +1,4 @@
-package util
+package file
 
 import (
 	"testing"
@@ -7,27 +7,27 @@ import (
 )
 
 func TestIsExist(t *testing.T) {
-	assert.True(t, IsExist("./is.go"))
-	assert.False(t, IsExist("./is_t.go"))
+	assert.True(t, IsExist("./file.go"))
+	assert.False(t, IsExist("./file_t.go"))
 }
 
 func TestIsFile(t *testing.T) {
-	assert.True(t, IsFile("./is.go"))
-	assert.False(t, IsFile("../util"))
+	assert.True(t, IsFile("./file.go"))
+	assert.False(t, IsFile("./file_t.go"))
 }
 
 func TestIsDir(t *testing.T) {
 	assert.True(t, IsDir("../util"))
-	assert.False(t, IsDir("./is.go"))
+	assert.False(t, IsDir("./file.go"))
 }
 
 func TestGetSize(t *testing.T) {
-	assert.Equal(t, int64(0), GetSize("./is_t.go"))
-	assert.LessOrEqual(t, int64(0), GetSize("./is.go"))
+	assert.Equal(t, int64(0), GetSize("./file_t.go"))
+	assert.LessOrEqual(t, int64(0), GetSize("./file.go"))
 }
 
 func TestReadFile(t *testing.T) {
-	assert.NotEmpty(t, ReadFile("./is.go"))
+	assert.NotEmpty(t, ReadFile("./file.go"))
 }
 
 func TestWriteFile(t *testing.T) {
