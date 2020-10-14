@@ -61,8 +61,7 @@ func Ext(file string) string {
 }
 
 // LineCount ...
-func LineCount(filePath string) int {
-	count := 0
+func LineCount(filePath string) (count int) {
 	file, err := os.Open(filePath)
 	if err != nil {
 		return count
