@@ -1,9 +1,10 @@
 package sudoku
 
 import (
+	"fmt"
 	"testing"
 
-	"github.com/evercyan/letitgo/cli"
+	"github.com/evercyan/gocli/table"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -12,10 +13,14 @@ func TestSudoku(t *testing.T) {
 }
 
 func TestSudokuGenarate(t *testing.T) {
-	cli.Table(Generate(Easy)).Title("Sukudo 生成 - Easy").Output()
-	cli.Table(Generate(Medium)).Title("Sukudo 生成 - Medium").Output()
-	cli.Table(Generate(Hard)).Title("Sukudo 生成 - Hard").Output()
-	cli.Table(Generate(1000)).Title("Sukudo 生成 - 无效难度").Output()
+	fmt.Println("Sukudo 生成 - Easy")
+	table.NewTable(Generate(Easy)).Render()
+	fmt.Println("Sukudo 生成 - Medium")
+	table.NewTable(Generate(Medium)).Render()
+	fmt.Println("Sukudo 生成 - Hard")
+	table.NewTable(Generate(Hard)).Render()
+	fmt.Println("Sukudo 生成 - 无效难度")
+	table.NewTable(Generate(1000)).Render()
 }
 
 func TestSudokuSolve(t *testing.T) {
@@ -32,7 +37,7 @@ func TestSudokuSolve(t *testing.T) {
 	}
 	result, err := Solve(data)
 	assert.Nil(t, err)
-	cli.Table(result).Title("解决 Sukudo").Output()
+	table.NewTable(result).Render()
 }
 
 func TestSudokuVerify(t *testing.T) {
