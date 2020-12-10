@@ -23,7 +23,7 @@ func ToInt64(str string) int64 {
 
 // ToString ...
 func ToString(elem interface{}) string {
-	return string(fmt.Sprintf("%v", elem))
+	return fmt.Sprintf("%v", elem)
 }
 
 // ToBool ...
