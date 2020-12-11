@@ -24,8 +24,8 @@ func GetClientIp() string {
 	if err != nil {
 		return ""
 	}
-	for _, address := range addrs {
-		if ipnet, ok := address.(*net.IPNet); ok && !ipnet.IP.IsLoopback() && ipnet.IP.To4() != nil {
+	for _, addr := range addrs {
+		if ipnet, ok := addr.(*net.IPNet); ok && !ipnet.IP.IsLoopback() && ipnet.IP.To4() != nil {
 			return ipnet.IP.String()
 		}
 	}
@@ -38,7 +38,7 @@ func Guid() string {
 	if _, err := io.ReadFull(rand.Reader, b); err != nil {
 		return ""
 	}
-	return Md5(string(base64.URLEncoding.EncodeToString(b)))
+	return Md5(base64.URLEncoding.EncodeToString(b))
 }
 
 // Rand ...
@@ -52,7 +52,7 @@ func Rand(min, max int) int {
 
 // Range ...
 func Range(min, max int) []int {
-	list := []int{}
+	var list []int
 	if min > max {
 		return list
 	}

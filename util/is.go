@@ -76,7 +76,7 @@ func IsNumeric(elem interface{}) bool {
 		reflect.Uint32,
 		reflect.Uint64,
 		reflect.Uintptr,
-	) && ToBool("true")
+	)
 }
 
 // IsBool ...

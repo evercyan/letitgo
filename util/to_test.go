@@ -6,15 +6,17 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestToInt64(t *testing.T) {
-	assert.Equal(t, int64(123), ToInt64("123"))
-	assert.Equal(t, int64(0), ToInt64("abc"))
+func TestToUint(t *testing.T) {
+	assert.Equal(t, uint64(1), ToUint("1"))
+	assert.Equal(t, uint64(0), ToUint(""))
+	assert.Equal(t, uint64(3), ToUint(3))
 }
 
 func TestToBool(t *testing.T) {
-	assert.True(t, ToBool("1"))
+	assert.True(t, ToBool(true))
 	assert.False(t, ToBool("abc"))
 	assert.False(t, ToBool("0"))
+	assert.True(t, ToBool("1"))
 }
 
 func TestToString(t *testing.T) {
