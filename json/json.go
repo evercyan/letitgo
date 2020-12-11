@@ -21,6 +21,7 @@ func Json(text string) *js {
 	return j
 }
 
+// Key ...
 func (j *js) Key(key string) *js {
 	m, ok := (j.value).(map[string]interface{})
 	if !ok {
@@ -36,6 +37,7 @@ func (j *js) Key(key string) *js {
 	return j
 }
 
+// Index ...
 func (j *js) Index(index int) *js {
 	m, ok := (j.value).([]interface{})
 	if !ok {
@@ -50,33 +52,38 @@ func (j *js) Index(index int) *js {
 	return j
 }
 
+// Value ...
 func (j *js) Value() interface{} {
 	return j.value
 }
 
+// ToString ...
 func (j *js) ToString() string {
 	if j.value == nil {
 		return ""
 	}
-	return string(fmt.Sprintf("%v", j.value))
+	return fmt.Sprintf("%v", j.value)
 }
 
-func (j *js) ToInt64() int64 {
-	resp, err := strconv.ParseInt(j.ToString(), 0, 64)
+// ToUint ...
+func (j *js) ToUint() uint64 {
+	v, err := strconv.ParseUint(j.ToString(), 10, 64)
 	if err != nil {
 		return 0
 	}
-	return resp
+	return v
 }
 
+// ToJson ...
 func (j *js) ToJson() string {
 	if j.value == nil {
 		return ""
 	}
-	bytes, _ := json.Marshal(j.value)
-	return string(bytes)
+	b, _ := json.Marshal(j.value)
+	return string(b)
 }
 
+// ToArray ...
 func (j *js) ToArray() interface{} {
 	switch (j.value).(type) {
 	case []interface{}:

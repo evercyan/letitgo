@@ -25,8 +25,8 @@ func TestJson(t *testing.T) {
 	name := Json(jsonstr).Key("name").ToString()
 	assert.Equal(t, "hello", name)
 
-	age := Json(jsonstr).Key("detail").Key("age").ToInt64()
-	assert.Equal(t, int64(20), age)
+	age := Json(jsonstr).Key("detail").Key("age").ToUint()
+	assert.Equal(t, uint64(20), age)
 
 	lang1 := Json(jsonstr).Key("langs").Index(1).ToString()
 	assert.Equal(t, "golang", lang1)
@@ -51,12 +51,12 @@ func TestJsonError(t *testing.T) {
 	assert.Empty(t, Json("{").ToJson())
 	assert.Nil(t, Json("{").Key("name").Value())
 	assert.Empty(t, Json("{").Key("name").ToString())
-	assert.Equal(t, int64(0), Json("{").Key("name").ToInt64())
+	assert.Equal(t, uint64(0), Json("{").Key("name").ToUint())
 	assert.Nil(t, Json(jsonstr).Key("name1").Value())
 	assert.Nil(t, Json(jsonstr).Key("langs").Key("name").Value())
 	assert.Nil(t, Json(jsonstr).Index(0).Value())
 	assert.Nil(t, Json(jsonstr).Key("langs").Index(10).Value())
-	assert.Equal(t, int64(0), Json(jsonstr).Key("langs").ToInt64())
+	assert.Equal(t, uint64(0), Json(jsonstr).Key("langs").ToUint())
 }
 
 // BenchmarkJson-8   	  327823	      3381 ns/op	    1472 B/op	      37 allocs/op

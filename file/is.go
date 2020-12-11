@@ -34,6 +34,7 @@ func IsImage(filePath string) bool {
 		return false
 	}
 	defer file.Close()
+
 	_, _, err = image.Decode(bufio.NewReader(file))
 	return err == nil
 }

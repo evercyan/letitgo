@@ -52,11 +52,11 @@ func ToUint(elem interface{}) uint64 {
 		if v == "" {
 			return 0
 		}
-		n, err := strconv.ParseUint(v, 10, 64)
+		vv, err := strconv.ParseUint(v, 10, 64)
 		if err != nil {
 			return 0
 		}
-		return n
+		return vv
 	default:
 		return 0
 	}

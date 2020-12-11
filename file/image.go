@@ -16,6 +16,7 @@ func ImageType(filePath string) string {
 		return ""
 	}
 	defer file.Close()
+
 	_, t, err := image.Decode(bufio.NewReader(file))
 	if err != nil {
 		return ""

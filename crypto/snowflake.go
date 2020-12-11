@@ -64,7 +64,7 @@ func (s *snowflake) Generate() int64 {
 		s.sequence = 0
 	}
 	s.timestamp = now
-	r := int64((now-twepoch)<<timestampShift | (s.workerid << workeridShift) | (s.sequence))
+	r := (now-twepoch)<<timestampShift | (s.workerid << workeridShift) | (s.sequence)
 	s.Unlock()
 	return r
 }

@@ -43,11 +43,12 @@ func Read(filePath string) string {
 		return ""
 	}
 	defer file.Close()
-	resp, err := ioutil.ReadAll(file)
+
+	b, err := ioutil.ReadAll(file)
 	if err != nil {
 		return ""
 	}
-	return string(resp)
+	return string(b)
 }
 
 // Write ...

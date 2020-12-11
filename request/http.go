@@ -14,6 +14,7 @@ func Get(url string) (string, error) {
 		return "", err
 	}
 	defer resp.Body.Close()
+
 	b, err := ioutil.ReadAll(resp.Body)
 	return string(b), err
 }
@@ -26,6 +27,7 @@ func Post(url string, data string) (string, error) {
 		return "", err
 	}
 	defer resp.Body.Close()
+
 	b, err := ioutil.ReadAll(resp.Body)
 	return string(b), err
 }
@@ -43,6 +45,7 @@ func Request(method string, url string, data string) (string, error) {
 		return "", err
 	}
 	defer resp.Body.Close()
+
 	b, err := ioutil.ReadAll(resp.Body)
 	return string(b), err
 }
