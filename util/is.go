@@ -2,18 +2,8 @@ package util
 
 import (
 	"encoding/json"
-	"net"
-	"net/url"
 	"reflect"
-	"regexp"
-	"strings"
 	"time"
-)
-
-const (
-	regexURL     = `^((ftp|https?):\/\/)?(\S+(:\S*)?@)?((([1-9]\d?|1\d\d|2[01]\d|22[0-3])(\.(1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.([0-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(([a-zA-Z0-9]+([-\.][a-zA-Z0-9]+)*)|((www\.)?))?(([a-z\x{00a1}-\x{ffff}0-9]+-?-?)*[a-z\x{00a1}-\x{ffff}0-9]+)(?:\.([a-z\x{00a1}-\x{ffff}]{2,}))?))(:(\d{1,5}))?((\/|\?|#)[^\s]*)?$`
-	regexMobile  = `^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199|(147))\d{8}$`
-	regexChinese = "^[\u4E00-\u9FA5]+$"
 )
 
 func is(elem interface{}, types ...reflect.Kind) bool {
@@ -156,42 +146,4 @@ func InArray(elem interface{}, target interface{}) bool {
 func IsJson(str string) bool {
 	var js json.RawMessage
 	return json.Unmarshal([]byte(str), &js) == nil
-}
-
-// IsEmail ...
-func IsEmail(str string) bool {
-	return strings.Contains(str, "@") && string(str[0]) != "@" && string(str[len(str)-1]) != "@"
-}
-
-// IsURL ...
-func IsURL(str string) bool {
-	if len(str) >= 2083 || len(str) <= 3 {
-		return false
-	}
-	u, err := url.Parse(str)
-	if err != nil {
-		return false
-	}
-	if strings.HasPrefix(u.Host, ".") {
-		return false
-	}
-	if u.Host == "" && (u.Path != "" && !strings.Contains(u.Path, ".")) {
-		return false
-	}
-	return regexp.MustCompile(regexURL).MatchString(str)
-}
-
-// IsIP ...
-func IsIP(str string) bool {
-	return net.ParseIP(str) != nil && strings.Contains(str, ".")
-}
-
-// IsMobile ...
-func IsMobile(str string) bool {
-	return regexp.MustCompile(regexMobile).MatchString(str)
-}
-
-// IsChinese ...
-func IsChinese(str string) bool {
-	return regexp.MustCompile(regexChinese).MatchString(str)
 }

@@ -47,34 +47,10 @@ func TestIsEmpty(t *testing.T) {
 	assert.False(t, IsEmpty("0"))
 }
 
-func TestIsEmail(t *testing.T) {
-	assert.True(t, IsEmail("evercyan@qq.com"))
-	assert.False(t, IsEmail("evercyan"))
-}
-
-func TestIsURL(t *testing.T) {
-	assert.True(t, IsURL("http://t.cn"))
-	assert.False(t, IsURL(""))
-	assert.False(t, IsURL("h"))
-	assert.False(t, IsURL("http"))
-	assert.False(t, IsURL("http://.t.cn"))
-	assert.False(t, IsURL(".http://.t.cn"))
-}
-
 func TestIsJson(t *testing.T) {
 	assert.True(t, IsJson("{\"Title\":\"AAA\",\"Text\":\"BBB\"}"))
 	assert.True(t, IsJson("[1, 2, 3]"))
 	assert.False(t, IsJson("["))
-}
-
-func TestIsIP(t *testing.T) {
-	assert.True(t, IsIP("127.0.0.1"))
-	assert.False(t, IsIP("127.0.0.256"))
-}
-
-func TestIsMobile(t *testing.T) {
-	assert.True(t, IsMobile("18500000000"))
-	assert.False(t, IsMobile("134"))
 }
 
 func TestInArray(t *testing.T) {
@@ -83,10 +59,4 @@ func TestInArray(t *testing.T) {
 
 	assert.True(t, InArray(1, map[int]int{1: 1, 2: 2}))
 	assert.False(t, InArray(3, map[int]int{1: 1, 2: 2}))
-}
-
-func TestIsChinese(t *testing.T) {
-	assert.True(t, IsChinese("你好"))
-	assert.False(t, IsChinese("134"))
-	assert.False(t, IsChinese("你好a"))
 }
