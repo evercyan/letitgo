@@ -31,3 +31,7 @@ func TestRanger(t *testing.T) {
 	assert.Equal(t, []int(nil), Range(2, 1))
 	assert.Equal(t, []int{1, 2}, Range(1, 2))
 }
+
+func TestRandString(t *testing.T) {
+	assert.Equal(t, 6, len(RandString(6)))
+}

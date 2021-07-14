@@ -3,9 +3,9 @@ package file
 import (
 	"bufio"
 	"image"
-	_ "image/gif"
-	_ "image/jpeg"
-	_ "image/png"
+	_ "image/gif"  // ...
+	_ "image/jpeg" // ...
+	_ "image/png"  // ...
 	"os"
 )
 

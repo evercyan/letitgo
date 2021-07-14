@@ -10,25 +10,26 @@ import (
 	"strings"
 )
 
-type Requests struct {
+// requests ...
+type requests struct {
 	*http.Client
 	TLS     *tls.Config
 	options *Options
 }
 
-func (r *Requests) Get(ctx context.Context, url string, headers http.Header) (*http.Response, error) {
+func (r *requests) Get(ctx context.Context, url string, headers http.Header) (*http.Response, error) {
 	return r.Do(ctx, "GET", url, headers, nil)
 }
-func (r *Requests) Post(ctx context.Context, url string, headers http.Header, body []byte) (*http.Response, error) {
+func (r *requests) Post(ctx context.Context, url string, headers http.Header, body []byte) (*http.Response, error) {
 	return r.Do(ctx, "POST", url, headers, body)
 }
-func (r *Requests) Put(ctx context.Context, url string, headers http.Header, body []byte) (*http.Response, error) {
+func (r *requests) Put(ctx context.Context, url string, headers http.Header, body []byte) (*http.Response, error) {
 	return r.Do(ctx, "PUT", url, headers, body)
 }
-func (r *Requests) Delete(ctx context.Context, url string, headers http.Header) (*http.Response, error) {
+func (r *requests) Delete(ctx context.Context, url string, headers http.Header) (*http.Response, error) {
 	return r.Do(ctx, "DELETE", url, headers, nil)
 }
-func (r *Requests) Do(ctx context.Context, method string, url string, headers http.Header, body []byte) (*http.Response, error) {
+func (r *requests) Do(ctx context.Context, method string, url string, headers http.Header, body []byte) (*http.Response, error) {
 	if strings.HasPrefix(url, "https") {
 		if transport, ok := r.Client.Transport.(*http.Transport); ok {
 			transport.TLSClientConfig = r.TLS
@@ -66,16 +67,16 @@ func (r *Requests) Do(ctx context.Context, method string, url string, headers ht
 	return resp, nil
 }
 
-//New ...
-func New() *Requests {
-	return NewWithOptions(defaultOptions)
+// NewClient ...
+func NewClient() *requests {
+	return NewClientWithOptions(defaultOptions)
 }
 
-// NewWithOptions ...
-func NewWithOptions(option *Options) *Requests {
+// NewClientWithOptions ...
+func NewClientWithOptions(option *Options) *requests {
 	option = setOptionDefaultValue(option)
 	if !option.SSLEnabled {
-		return &Requests{
+		return &requests{
 			Client: &http.Client{
 				Transport: &http.Transport{
 					MaxIdleConnsPerHost:   option.ConnsPerHost,
@@ -87,7 +88,7 @@ func NewWithOptions(option *Options) *Requests {
 			options: option,
 		}
 	}
-	return &Requests{
+	return &requests{
 		Client: &http.Client{
 			Transport: &http.Transport{
 				TLSHandshakeTimeout:   option.HandshakeTimeout,

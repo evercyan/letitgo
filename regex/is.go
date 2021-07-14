@@ -25,7 +25,7 @@ func IsPhone(str string) bool {
 	return is(patternPhone, str)
 }
 
-// Email ...
+// IsEmail ...
 func IsEmail(str string) bool {
 	return is(patternEmail, str)
 }

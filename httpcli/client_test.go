@@ -15,7 +15,7 @@ func skip(t *testing.T, err error) {
 }
 
 func TestGet(t *testing.T) {
-	resp, err := New().Get(context.Background(), "http://127.0.0.1/letitgo.php?method=get", nil)
+	resp, err := NewClient().Get(context.Background(), "http://127.0.0.1/letitgo.php?method=get", nil)
 	skip(t, err)
 	assert.Nil(t, err)
 	b, _ := ioutil.ReadAll(resp.Body)

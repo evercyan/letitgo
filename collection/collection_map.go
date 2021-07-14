@@ -54,7 +54,7 @@ func (c collectionMap) Pluck(key string) collection {
 }
 
 func (c collectionMap) Filter(callback filterCallback) collection {
-	list := []map[string]interface{}{}
+	list := make([]map[string]interface{}, 0)
 	for i := 0; i < len(c.value); i++ {
 		if callback(i, c.value[i]) {
 			list = append(list, c.value[i])

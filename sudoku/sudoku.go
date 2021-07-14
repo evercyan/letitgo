@@ -8,6 +8,7 @@ import (
 // Level ...
 type Level int
 
+// Level ...
 const (
 	Easy   Level = iota // 简单
 	Medium              // 中等

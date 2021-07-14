@@ -25,6 +25,7 @@ func (g *goroutine) Wait() {
 	g.wg.Wait()
 }
 
+// NewGoroutine ...
 func NewGoroutine(count int) *goroutine {
 	return &goroutine{
 		c:  make(chan struct{}, count),

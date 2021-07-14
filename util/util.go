@@ -61,3 +61,19 @@ func Range(min, max int) []int {
 	}
 	return list
 }
+
+// RandString ...
+func RandString(length int) string {
+	bytes := make([]byte, length)
+	for i := 0; i < length; i++ {
+		b := r.Intn(26) + 65
+		bytes[i] = byte(b)
+	}
+	return string(bytes)
+}
+
+var r *mrand.Rand
+
+func init() {
+	r = mrand.New(mrand.NewSource(time.Now().Unix()))
+}

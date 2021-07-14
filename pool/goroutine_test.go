@@ -13,9 +13,9 @@ func TestNewGoroutine(t *testing.T) {
 
 	g := NewGoroutine(3)
 	for i := 0; i < 9; i++ {
+		g.Add(1)
 		go func(i int) {
 			defer g.Done()
-			g.Add(1)
 
 			sec := time.Now().Unix()
 			if _, ok := result[sec]; !ok {
