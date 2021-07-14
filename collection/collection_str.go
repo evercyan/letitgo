@@ -59,7 +59,7 @@ func (c collectionString) DelKey(key int) collection {
 	if key < 0 || key >= len(c.value) {
 		return c
 	}
-	list := make([]string, 0)
+	var list []string
 	if key == len(c.value)-1 {
 		list = c.value[:key]
 	} else {

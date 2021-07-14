@@ -1,0 +1,7 @@
+demo:
+  service: "file 18:031223"
+  abc: "aaa"
+list:
+  - aaa
+  - bbb
+  - ccc
