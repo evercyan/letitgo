@@ -12,6 +12,13 @@
 *.out
 
 # Dependency directories (remove the comment below to include it)
-# vendor/
+vendor/
+bin/*
+go.sum
+
+.DS_Store
+.idea/
+.scannerwork/
+logs/
 
 coverage.*

@@ -86,7 +86,7 @@ func (c collectionNumber) DelValue(value interface{}) collection {
 }
 
 func (c collectionNumber) Filter(callback filterCallback) collection {
-	list := []float64{}
+	list := make([]float64, 0)
 	for i := 0; i < len(c.value); i++ {
 		if callback(i, c.value[i]) {
 			list = append(list, c.value[i])

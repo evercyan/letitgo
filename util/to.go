@@ -2,6 +2,7 @@ package util
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"regexp"
 	"strconv"
@@ -21,9 +22,8 @@ func ToUint(elem interface{}) uint64 {
 	case bool:
 		if v {
 			return 1
-		} else {
-			return 0
 		}
+		return 0
 	case float32:
 		return uint64(v)
 	case float64:
@@ -101,4 +101,13 @@ func ToSnakeCase(str string) string {
 		}
 	}
 	return string(resp)
+}
+
+// ToStruct ...
+func ToStruct(from, to interface{}) error {
+	b, err := json.Marshal(from)
+	if err != nil {
+		return err
+	}
+	return json.Unmarshal(b, to)
 }

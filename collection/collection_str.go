@@ -44,7 +44,7 @@ func (c collectionString) Contains(value interface{}) bool {
 }
 
 func (c collectionString) Unique() collection {
-	list := []string{}
+	list := make([]string, 0)
 	m := map[string]bool{}
 	for i := 0; i < len(c.value); i++ {
 		if _, ok := m[c.value[i]]; !ok {
@@ -59,7 +59,7 @@ func (c collectionString) DelKey(key int) collection {
 	if key < 0 || key >= len(c.value) {
 		return c
 	}
-	list := []string{}
+	var list []string
 	if key == len(c.value)-1 {
 		list = c.value[:key]
 	} else {
@@ -78,7 +78,7 @@ func (c collectionString) DelValue(value interface{}) collection {
 }
 
 func (c collectionString) Filter(callback filterCallback) collection {
-	list := []string{}
+	list := make([]string, 0)
 	for i := 0; i < len(c.value); i++ {
 		if callback(i, c.value[i]) {
 			list = append(list, c.value[i])

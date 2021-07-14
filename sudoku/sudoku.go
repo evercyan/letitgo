@@ -8,6 +8,7 @@ import (
 // Level ...
 type Level int
 
+// Level ...
 const (
 	Easy   Level = iota // 简单
 	Medium              // 中等
@@ -41,7 +42,7 @@ func Generate(level Level) (board [9][9]int) {
 	// todo 当前仅随机遮掩, 待优化
 	// 根据难度进行遮掩处理
 	// 将九宫格转换为 0-80 下标的一维数组, 随机生成隐藏的下标, 置 0 即可
-	keys := []int{}
+	keys := make([]int, 0)
 	for i := 0; i < 81; i++ {
 		keys = append(keys, i)
 	}
