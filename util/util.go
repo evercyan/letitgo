@@ -2,11 +2,11 @@ package util
 
 import (
 	"crypto/md5"
-	"crypto/rand"
+	crand "crypto/rand"
 	"encoding/base64"
 	"encoding/hex"
 	"io"
-	mrand "math/rand"
+	"math/rand"
 	"net"
 	"time"
 )
@@ -35,7 +35,7 @@ func GetClientIp() string {
 // Guid ...
 func Guid() string {
 	b := make([]byte, 48)
-	if _, err := io.ReadFull(rand.Reader, b); err != nil {
+	if _, err := io.ReadFull(crand.Reader, b); err != nil {
 		return ""
 	}
 	return Md5(base64.URLEncoding.EncodeToString(b))
@@ -46,8 +46,8 @@ func Rand(min, max int) int {
 	if min > max {
 		return 0
 	}
-	mrand.Seed(time.Now().UnixNano())
-	return min + mrand.Intn(max+1-min)
+	rand.Seed(time.Now().UnixNano())
+	return min + rand.Intn(max+1-min)
 }
 
 // Range ...
@@ -64,16 +64,11 @@ func Range(min, max int) []int {
 
 // RandString ...
 func RandString(length int) string {
+	rand.Seed(time.Now().UnixNano())
 	bytes := make([]byte, length)
 	for i := 0; i < length; i++ {
-		b := r.Intn(26) + 65
+		b := rand.Intn(26) + 65
 		bytes[i] = byte(b)
 	}
 	return string(bytes)
-}
-
-var r *mrand.Rand
-
-func init() {
-	r = mrand.New(mrand.NewSource(time.Now().Unix()))
 }

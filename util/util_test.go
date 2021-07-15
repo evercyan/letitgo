@@ -34,4 +34,5 @@ func TestRanger(t *testing.T) {
 
 func TestRandString(t *testing.T) {
 	assert.Equal(t, 6, len(RandString(6)))
+	assert.NotEqual(t, RandString(6), RandString(6))
 }
